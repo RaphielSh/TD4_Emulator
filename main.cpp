@@ -21,9 +21,10 @@ std::vector<uint8_t> getInstructions(const std::string& path) {
 		std::cout << "Unable to load file." << std::endl;
 		return instr_cons;
 	}
-
 	char read_byte;	//init 1 byte for reading
-	while (file.read(&read_byte, 1)) { instr_cons.push_back(static_cast<uint8_t>(read_byte)); }
+  int count = 0;
+	while (file.read(&read_byte, 1)) { 
+    instr_cons.push_back(static_cast<uint8_t>(read_byte)); }
 	return instr_cons;
 }
 
@@ -107,11 +108,13 @@ void instrExecution(RegistersStack& proc, const std::vector<uint8_t>& program) {
 
 			//I/O section
 	case 0b0010: // IN A
-		proc.A = proc.IN;
+    proc.A = proc.IN;
 		std::cout << "IN A" << std::endl;
 		break;
+
+
 	case 0b0110: // IN B
-		proc.B = proc.IN;
+    proc.B = proc.IN;
 		std::cout << "IN B" << std::endl;
 		break;
 
@@ -145,7 +148,7 @@ int main() {
 
 		//Program load
 		auto program = getInstructions(filename);
-		if (program.empty()) { return 1; }
+		if (program.empty()) { std::cout<<"File is empty."<<std::endl; return 1; }
 
 		std::cout << "Program's loaded" << std::endl;
 
